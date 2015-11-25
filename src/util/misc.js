@@ -431,12 +431,14 @@
         // using `new Function` for better introspection
         if (!proto[getterName]) {
           proto[getterName] = (function(property) {
-            return new Function('return this.get("' + property + '")');
+//            return new Function('return this.get("' + property + '")');
+            return this.get.bind(this, property);
           })(propName);
         }
         if (!proto[setterName]) {
           proto[setterName] = (function(property) {
-            return new Function('value', 'return this.set("' + property + '", value)');
+//            return new Function('value', 'return this.set("' + property + '", value)');
+            return this.set.bind(this, property, value);
           })(propName);
         }
       }
